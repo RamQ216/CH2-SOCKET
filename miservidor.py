@@ -21,6 +21,23 @@ def chat_global(mensaje, emisor):
             # Si falla el envío, detectamos que el socket está MUERTO
             eliminar_usuario(usuario)
 
+def cerrar_servidor():
+    global servidor_abierto
+
+    print("ATENCIÓN: El servidor se está cerrando...")
+
+    chat_global("ATENCIÓN: El servidor se está cerrando...",None)
+
+    for cliente in list(CONECTADOS):
+        try:
+            cliente.close()
+        except:
+            pass
+
+    CONECTADOS.clear()
+    SERVIDOR.close()
+    print("Servidor apagado correctamente.")
+
 def eliminar_usuario(usuario):#cuando un cliente se desconecta, lo eliminamos de la lista de conectados y cerramos su socket
     if usuario in CONECTADOS:
         CONECTADOS.remove(usuario)
@@ -50,5 +67,8 @@ def iniciar():
             thread.start()#iniciamos el hilo para atender al cliente
         except Exception as e:
             print(f"Error aceptando conexión: {e}")
+        except KeyboardInterrupt:
+            cerrar_servidor()
+            break
 
 iniciar()#iniciamos el servidor y comenzamos a aceptar conexiones de clientes

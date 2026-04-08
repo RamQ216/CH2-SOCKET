@@ -31,7 +31,7 @@ def enviar(cliente_actual):#funcion para enviar mensajes al servidor, se ejecuta
     while True:
         try:
             texto = input("CHAT:")#input es bloqueante, espera a que el usuario escriba algo y presione enter
-            cliente_actual.send(f"{NOMBRE}: {texto}".encode('utf-8'))
+            cliente_actual.send(f"{NOMBRE}: {texto}".encode('utf-8'))#encode transforma el str en bytes y utf-8 el estandar de codificacion de caracteres, esto es necesario para enviar el mensaje por el socket
         except:
           
             break
