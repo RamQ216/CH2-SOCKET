@@ -54,7 +54,13 @@ def flujo_principal():
             except:
                 # Si fallamos al enviar, significa que el socket murió
                 print("[SISTEMA] Error al enviar. Reiniciando todo...")
+                CLIENTE.close() #cerramos el socket muerto
                 break # Rompe este bucle interno para volver a conectar arriba
 
 # Arrancamos el programa
 flujo_principal()
+
+#solucion de reintentos
+#fue gracias al  CLIENTE = conectar_al_servidor()
+#Al estar dentro del bucle por cada conexion actualiza el puerto
+#tambien crea un nuevo hilo
